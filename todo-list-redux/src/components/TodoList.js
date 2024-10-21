@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTodo, deleteTodo, setStatus, modifyTodo } from '../redux/actions';
-
-
+import "../styles/main.css"
 const TodoList = () => {
   const dispatch = useDispatch();
   const todos = useSelector(state => state.todos);
@@ -41,30 +40,34 @@ const TodoList = () => {
 
   return (
     <div>
-      <h1>Todo List</h1>
-      <input
-        type="text"
-        value={text}
-        onChange={e => setText(e.target.value)}
-        placeholder="Enter todo"
-      />
-      <input
-        type="text"
-        value={description}
-        onChange={e => setDescription(e.target.value)}
-        placeholder="Enter Description"
-      />
-      <input
-        type="date"
-        value={expectedEndDate}
-        onChange={e => setExpectedEndDate(e.target.value)}
-      />
-      <button onClick={editingTodo ? () => handleModify(editingTodo) : handleAdd}>
-        {editingTodo ? 'Update Todo' : 'Add Todo'}
-      </button>
+      <form className='container' action='#'>
+        <h1>Todo List</h1>
+
+        <input
+          type="text"
+          value={text}
+          onChange={e => setText(e.target.value)}
+          placeholder="Enter todo"
+        />
+        <input
+          type="text"
+          value={description}
+          onChange={e => setDescription(e.target.value)}
+          placeholder="Enter Description"
+        />
+        <input
+          type="date"
+          value={expectedEndDate}
+          onChange={e => setExpectedEndDate(e.target.value)}
+        />
+        <button onClick={editingTodo ? () => handleModify(editingTodo) : handleAdd}>
+          {editingTodo ? 'Update Todo' : 'Add Todo'}
+        </button>
+      </form>
 
       <table>
         <thead>
+          <tr><th colSpan='7'>Current Task List</th></tr>
           <tr>
             <th>Task ID</th>
             <th>Task Name</th>
@@ -84,13 +87,13 @@ const TodoList = () => {
                 <td>{todo.status}</td>
                 <td>{todo.description}</td>
                 <td>
-                  <button onClick={() => dispatch(deleteTodo(todo.id))}>Delete</button>
+                  <button className="delete" onClick={() => dispatch(deleteTodo(todo.id))}>Delete</button>
                 </td>
                 <td>
-                  <button onClick={() => dispatch(setStatus(todo.id, 'completed'))}>Complete</button>
+                  <button className="complete" onClick={() => dispatch(setStatus(todo.id, 'completed'))}>Complete</button>
                 </td>
                 <td>
-                  <button onClick={() => handleEditClick(todo)}>Edit</button>
+                  <button className="edit" onClick={() => handleEditClick(todo)}>Edit</button>
                 </td>
               </tr>
             ))
